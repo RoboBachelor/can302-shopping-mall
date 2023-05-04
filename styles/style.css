@@ -1,0 +1,168 @@
+body {
+	font-family: Arial;
+	color: #211a1a;
+	font-size: 0.9em;
+}
+
+#shopping-cart {
+	margin: 20px 40px;
+}
+
+#product-grid {
+	margin: 20px 40px;
+}
+
+#shopping-cart table {
+	width: 100%;
+	background-color: #F0F0F0;
+}
+
+#shopping-cart table td {
+	background-color: #FFFFFF;
+}
+
+.txt-heading {
+	color: #211a1a;
+	border-bottom: 1px solid #E0E0E0;
+	overflow: auto;
+}
+
+.button-delete {
+	background-color: #ffffff;
+	border: #d00000 1px solid;
+	padding: 5px 10px;
+	margin-left: 5px;
+	color: #d00000;
+	float: right;
+	text-decoration: none;
+	border-radius: 3px;
+}
+
+.button-save {
+	background-color: #ffffff;
+	border: #145A32 1px solid;
+	padding: 5px 10px;
+	margin-left: 5px;
+	color: #145A32;
+	float: right;
+	text-decoration: none;
+	border-radius: 3px;
+}
+
+.button-general {
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: #efefef;
+    border: #E0E0E0 1px solid;
+    color: #211a1a;
+    float: right;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#product-grid .txt-heading {
+	margin-bottom: 18px;
+}
+
+.product-item {
+	width: 270px;
+	float: left;
+	background: #ffffff;
+	margin: 30px 30px 0 0;
+	border: #E0E0E0 1px solid;
+}
+
+.product-detail {
+	float: left;
+	background: #ffffff;
+	width: 800px;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	border: #E0E0E0 1px solid;
+}
+
+.product-image {
+	height: 155px;
+	width: 250px;
+	background-color: #FFF;
+}
+
+.product-image-detail {
+	width: 400px;
+	height: auto;
+	background-color: #FFF;
+}
+
+.user-image-detail {
+	width: 160px;
+	height: auto;
+	background-color: #FFF;
+	border-radius: 50%;
+	border: #E0E0E0 2px solid;
+}
+
+.clear-float {
+	clear: both;
+}
+
+.demo-input-box {
+	border-radius: 2px;
+	border: #CCC 1px solid;
+	padding: 2px 1px;
+}
+
+.tbl-cart {
+	font-size: 0.9em;
+}
+
+.tbl-cart th {
+	font-weight: normal;
+}
+
+.product-title {
+	margin-bottom: 10px;
+	font-weight: 500;
+	height: 50px;
+}
+
+.product-price {
+	float:left;
+}
+
+.float-right {
+	float: right;
+}
+
+.product-quantity {
+	width: 50px;
+    padding: 5px 5px 5px 10px;
+    border-radius: 3px;
+    border: #E0E0E0 1px solid;
+}
+
+.product-tile-footer {
+    padding: 15px 15px 0px 15px;
+	background-color: #F7F8FE;
+    overflow: auto;
+}
+
+.edit-section {
+	padding: 15px 15px 15px 15px;
+	overflow: auto;
+}
+
+.cart-item-image {
+	width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: #E0E0E0 1px solid;
+    /*padding: 5px;*/
+    vertical-align: middle;
+    margin-right: 15px;
+}
+.no-records {
+	text-align: center;
+	clear: both;
+	margin: 38px 0px;
+}
