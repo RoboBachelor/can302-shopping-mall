@@ -15,6 +15,8 @@ if (isset($_GET["id"])) {
 $actionResponse = "";
 
 if (!isset($_SESSION["userid"])) {
+    header("Location: login.php");
+    exit;
     $actionResponse = "<b>You are not logged in! You have to <a href='login.php'><u>log in</u></a> before any operations.</b>";
     unset($_GET["action"]);
 }
@@ -139,7 +141,6 @@ $allUser = $db_handle->runQuery("SELECT * FROM user WHERE id != 0");
             <div class="txt-heading">
                 <h3>All users</h3>
             </div>
-            <a style="margin: 10px 0;" class="button-delete" href="index.php?action=empty">Do not click me</a>
             <table class="tbl-cart" cellpadding="10" cellspacing="1">
                 <tbody>
                 <tr>
