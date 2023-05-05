@@ -41,7 +41,7 @@ if (!empty($_GET["action"])) {
                 ++$successCnt;
             }
             $actionResponse = "<b>".$successCnt." order(s) submitted! Your products are on the way!</b>";
-            $_SESSION["cart_item"] = array();
+            unset($_SESSION["cart_item"]);
             break;
     }
 }
