@@ -12,11 +12,19 @@ if (isset($_GET["id"])){
 
 $actionResponse = "";
 
+if (!isset($_SESSION["userid"])) {
+    $actionResponse = "<b>You are not logged in! You have to <a href='login.php'><u>log in</u></a> before any operations.</b>";
+    unset($_GET["action"]);
+} else if ($_SESSION["user-role"] != "admin" && $_SESSION["user-role"] != "owner") {
+    $actionResponse = "<b>You don't have permissions to manage products!</b>";
+    unset($_GET["action"]);
+}
+
 if (isset($_GET["action"])){
     switch ($_GET["action"]) {
         case "add":
             $db_handle->runQuery("INSERT INTO `category`(`name`, `description`, `owner`)"
-                ."VALUES ('".$_POST["cat-title"]."','".$_POST["cat-description"]."', 1);");
+                ."VALUES ('".$_POST["cat-title"]."','".$_POST["cat-description"]."', ".$_SESSION["userid"].");");
             $id = $db_handle->getInsertedID();
             $actionResponse = date("H:i:s") . ": Add <i>" . $_POST["cat-title"] ."</i> (id:".$id.") OK!";
             break;
@@ -40,8 +48,8 @@ if (isset($_GET["action"])){
     }
 }
 
-$categories = $db_handle->runQuery("SELECT * FROM category WHERE owner='" . 1 . "'");
-$curCategory = $db_handle->runQuery("SELECT * FROM category WHERE id='" . $id . "'")[0];
+// $categories = $db_handle->runQuery("SELECT * FROM category WHERE owner='" . $_SESSION["userid"] . "'");
+$categories = $db_handle->runQuery("SELECT * FROM category WHERE 1;");
 
 ?>
 
@@ -61,9 +69,7 @@ $curCategory = $db_handle->runQuery("SELECT * FROM category WHERE id='" . $id . 
     <div id="content">
 
         <div id="product-grid">
-            <div class="txt-heading">
-                <h3>Edit Categories</h3>
-            </div>
+            <div class="txt-heading">Edit Categories</div>
 
             <div class="product-detail">
                 <div class="edit-section">
@@ -72,10 +78,11 @@ $curCategory = $db_handle->runQuery("SELECT * FROM category WHERE id='" . $id . 
                         <label for="prod-cat">Choose a category:</label><br>
                         <div style="width: 100%; display: inline-block;">
                             <select onchange=onChangeSelection(this.value) id="prod-cat" name="prod-cat" style="width: 100%">
-
-                                <option value="0"></option>
                                 <?php
                                     foreach ($categories as $category) {
+                                        if ($category["id"] == $id) {
+                                            $curCategory = $category;
+                                        }
                                 ?>
                                 <option value="<?php echo $category["id"]; ?>" <?php echo $id == $category["id"] ? "selected" : "" ?>><?php echo $category["name"]; ?></option>
                                 <?php

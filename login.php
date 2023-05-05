@@ -43,6 +43,7 @@ if (isset($_GET["action"])){
 
             $actionResponse = date("H:i:s") . ": Welcome <i>" . $_POST["user-name"] ."</i> (uid:".$user["id"].") OK!";
             $_SESSION["userid"] = $user["id"];
+            $_SESSION["user-role"] = $user["role"];
             break;
     }
 }
@@ -61,9 +62,7 @@ if (isset($_GET["action"])){
     <div id="content">
 
         <div id="product-grid">
-            <div class="txt-heading">
-                <h3>Login</h3>
-            </div>
+            <div class="txt-heading">Login</div>
 
             <div class="product-detail" style="width: 500px">
                 <div class="edit-section">

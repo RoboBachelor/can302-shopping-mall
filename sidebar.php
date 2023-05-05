@@ -15,21 +15,27 @@
                     <?php echo '&nbsp;&nbsp;'.$userSidebar["disp_name"].''; ?>
                 </a>
             </li>
-            <li><a href="login.php?action=logout">Log out</a></li>
+            <li><a href="login.php?action=logout"><i class="material-icons sidebar-icon" style="">logout</i> Log out</a></li>
             <?php
         } else {
             ?>
-            <li><a href="login.php">Log in</a></li>
+            <li><a href="login.php"><i class="material-icons sidebar-icon" style="">login</i> Log in</a></li>
             <?php
         }
         ?>
     </ul>
 
     <ul class="list-unstyled components">
-        <li><a href="user.php">Account</a></li>
-        <li><a href="index.php">Products</a></li>
-        <li><a href="category.php">Categories</a></li>
-        <li><a href="order.php">Orders</a></li>
+        <li><a href="user.php"><i class="material-icons sidebar-icon">group</i> Account</a></li>
+        <li><a href="index.php"><i class="material-icons sidebar-icon">local_mall</i> Products</a></li>
+        <li><a href="category.php"><i class="material-icons sidebar-icon">category</i> Categories</a></li>
+        <li><a href="order.php"><i class="material-icons sidebar-icon">receipt</i> Orders</a></li>
+    </ul>
+
+    <ul class="list-unstyled components">
+        <li><a href="https://github.com/RoboBachelor/can302-shopping-mall">
+                <i class="material-icons sidebar-icon" style="">code</i> Source code
+            </a></li>
     </ul>
 
     <ul class="list-unstyled CTAs">

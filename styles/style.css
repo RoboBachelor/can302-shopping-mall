@@ -25,6 +25,9 @@ body {
 	color: #211a1a;
 	border-bottom: 1px solid #E0E0E0;
 	overflow: auto;
+	margin-bottom: 18px;
+	font-size: 24px;
+	font-weight: 500;
 }
 
 .button-delete {
@@ -62,7 +65,6 @@ body {
 }
 
 #product-grid .txt-heading {
-	margin-bottom: 18px;
 }
 
 .product-item {
@@ -136,7 +138,7 @@ body {
 
 .product-quantity {
 	width: 50px;
-    padding: 5px 5px 5px 10px;
+    padding: 0 5px 0 10px;
     border-radius: 3px;
     border: #E0E0E0 1px solid;
 }

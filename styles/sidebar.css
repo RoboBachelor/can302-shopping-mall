@@ -1,7 +1,7 @@
 /*
     DEMO STYLE
 */
-@import "https://fonts.font.im/css?family=Poppins:300,400,500,600,700";
+@import "https://fonts.lug.ustc.edu.cn/css?family=Poppins:300,400,500,600,700";
 
 
 body {
@@ -168,4 +168,9 @@ a.article, a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+/* ---- Icons ---- */
+.sidebar-icon {
+    vertical-align: bottom;
 }

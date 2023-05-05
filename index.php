@@ -3,6 +3,8 @@ session_start();
 require_once("dbcontroller.php");
 $db_handle = new DBController();
 
+$actionResponse = "";
+
 if (!empty($_GET["action"])) {
     switch ($_GET["action"]) {
         case "add":
@@ -26,6 +28,21 @@ if (!empty($_GET["action"])) {
         case "empty":
             unset($_SESSION["cart_item"]);
             break;
+        case "submit":
+            if (!isset($_SESSION["userid"])) {
+                $actionResponse = "<b>You have to <a href='login.php'><u>log in</u></a> before submitting your order..</b>";
+                break;
+            }
+            $user = $db_handle->runQuery("SELECT * FROM user WHERE id='" . $_SESSION["userid"] . "'")[0];
+            $successCnt = 0;
+            foreach ($_SESSION["cart_item"] as $item_id => $item) {
+                $db_handle->runQuery("INSERT INTO `orders`(`time`, `product_id`, `product_name`, `product_price`, `product_owner`, `quantity`, `customer_id`, `customer_name`, `address`, `tel`)"
+                    ."VALUES (now(),".$item_id.",'".$item["name"]."',".$item["price"].",".$item["owner"].",".$item["quantity"].",".$user["id"].",'".$user["title"] . " " . $user["disp_name"]."','".$user["address"]."','".$user["tel"]."');");
+                ++$successCnt;
+            }
+            $actionResponse = "<b>".$successCnt." order(s) submitted! Your products are on the way!</b>";
+            $_SESSION["cart_item"] = array();
+            break;
     }
 }
 ?>
@@ -39,11 +56,8 @@ if (!empty($_GET["action"])) {
     <?php include ("sidebar.php"); ?>
     <div id="content">
 
-        <div id="shopping-cart">
+        <div id="shopping-cart" style="overflow: hidden;">
             <div class="txt-heading">Shopping Cart</div>
-
-            <a style="margin: 10px 0;" class="button-delete" href="index.php?action=empty">Empty Cart</a>
-
             <?php
             if (isset($_SESSION["cart_item"])) {
                 $total_quantity = 0;
@@ -53,7 +67,7 @@ if (!empty($_GET["action"])) {
                     <tbody>
                     <tr>
                         <th style="text-align:left;">Name</th>
-                        <th style="text-align:left;">Code</th>
+                        <th style="text-align:left;">ID</th>
                         <th style="text-align:right;" width="5%">Quantity</th>
                         <th style="text-align:right;" width="10%">Unit Price</th>
                         <th style="text-align:right;" width="10%">Price</th>
@@ -70,9 +84,11 @@ if (!empty($_GET["action"])) {
                             <td style="text-align:right;"><?php echo $item["quantity"]; ?></td>
                             <td style="text-align:right;"><?php echo "$ " . $item["price"]; ?></td>
                             <td style="text-align:right;"><?php echo "$ " . number_format($item_price, 2); ?></td>
-                            <td style="text-align:center;"><a
-                                    href="index.php?action=remove&id=<?php echo $item_id; ?>"
-                                    class="btnRemoveAction"><img src="icons/delete.png" alt="Remove Item"/></a></td>
+                            <td style="text-align:center;">
+                                <a href="index.php?action=remove&id=<?php echo $item_id; ?>" class="btnRemoveAction">
+                                    <i class="material-icons" style="color: #d9534f; font-size: 20px;">delete</i>
+                                </a>
+                            </td>
                         </tr>
                         <?php
                         $total_quantity += $item["quantity"];
@@ -96,6 +112,12 @@ if (!empty($_GET["action"])) {
                 <?php
             }
             ?>
+
+            <div style="margin: 10px 0; overflow: hidden;">
+                <p><?php echo $actionResponse; ?></p>
+                <a class="button-save" href="index.php?action=submit">Check Out</a>
+                <a class="button-delete" href="index.php?action=empty">Empty Cart</a>
+            </div>
         </div>
 
         <div id="product-grid">
@@ -112,19 +134,22 @@ if (!empty($_GET["action"])) {
                         <div class="product-image"><img src="<?php echo $product["image"]; ?>"></div>
                         <div class="product-tile-footer">
                             <div class="float-right">
-                                <form method="post" action="product.php?id=<?php echo $product["id"]; ?>">
-                                    <input type="submit" value="Edit" class="button-general"/>
-                                </form>
+                                <a href="product.php?id=<?php echo $product["id"]; ?>">
+                                    <i class="material-icons" style="color: #CA6F1E; font-size: 30px;">edit_note</i>
+                                </a>
                             </div>
                             <div class="product-title"><?php echo $product["name"]; ?></div>
 
                             <div style="height: 46px; vertical-align: bottom">
                                 <div class="product-price"><?php echo "$" . $product["price"]; ?></div>
                                 <div class="float-right">
-                                    <form method="post" action="index.php?action=add&id=<?php echo $product["id"]; ?>">
+                                    <form name="addCartForm<?php echo $product["id"]; ?>" method="post" action="index.php?action=add&id=<?php echo $product["id"]; ?>">
                                         <input type="text" class="product-quantity"
                                                name="quantity" value="1" size="2"/>
-                                        <input type="submit" value="Add to Cart" class="button-general"/>
+<!--                                        <input type="submit" value="Add to Cart" class="button-general"/>-->
+                                        <a href="javascript:document.addCartForm<?php echo $product["id"]; ?>.submit();">
+                                            <i class="material-icons" style="color: #404A84; font-size: 24px; vertical-align: bottom;">add_shopping_cart</i>
+                                        </a>
                                     </form>
                                 </div>
                             </div>

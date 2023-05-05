@@ -13,7 +13,10 @@ if (isset($_GET["id"])){
 $actionResponse = "";
 
 if (!isset($_SESSION["userid"])) {
-    $actionResponse = "<b>You are not logged in! You have to log in before any operations.</b>";
+    $actionResponse = "<b>You are not logged in! You have to <a href='login.php'><u>log in</u></a> before any operations.</b>";
+    unset($_GET["action"]);
+} else if ($_SESSION["user-role"] != "admin" || $_SESSION["user-role"] != "owner") {
+    $actionResponse = "<b>You don't have permissions to manage products!</b>";
     unset($_GET["action"]);
 }
 

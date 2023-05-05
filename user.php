@@ -28,6 +28,11 @@ if (isset($_GET["action"])) {
             $removedUser = $db_handle->runQuery("SELECT * FROM user WHERE id='" . $id . "'")[0];
             $db_handle->runQuery("DELETE FROM `user` WHERE `id` = " . $id . ";");
             $actionResponse = date("H:i:s") . ": Remove user <i>" . $removedUser["name"] . "</i> (id:" . $id . ") OK!";
+
+            // Logout if current user was removed
+            if ($_SESSION["userid"] == $id) {
+                $_SESSION = array();
+            }
             $id = 0;
             break;
         case "save":
@@ -36,7 +41,7 @@ if (isset($_GET["action"])) {
             }
             $db_handle->runQuery("UPDATE `user` SET `disp_name`='" . $_POST["user-disp-name"] . "', `image`='" . $_POST["user-image"] . "', `title`='" . $_POST["user-title"] . "',
              `role`='" . $_POST["user-role"] . "', `address`='" . $_POST["user-address"] . "', `tel`='" . $_POST["user-tel"] . "' WHERE `id` = " . $id . ";");
-            $actionResponse = date("H:i:s") . ": Save <i>" . $_POST["user-name"] . "</i> (id:" . $id . ") OK!";
+            $actionResponse = date("H:i:s") . ": Save user <i>" . $_POST["user-name"] . "</i> (id:" . $id . ") OK!";
             break;
     }
 }
@@ -56,9 +61,7 @@ $allUser = $db_handle->runQuery("SELECT * FROM user WHERE id != 0");
 
     <div id="content">
         <div id="product-grid" style="overflow: hidden;">
-            <div class="txt-heading">
-                <h3>Edit user</h3>
-            </div>
+            <div class="txt-heading">Edit user</div>
             <div class="product-detail">
                 <form method="post">
                     <div class="edit-section" style="overflow: hidden;">
